@@ -2,8 +2,8 @@ package fr.joudar.mareu.ui;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Build;
@@ -16,15 +16,14 @@ import fr.joudar.mareu.R;
 import fr.joudar.mareu.databinding.ActivityMeetingsListBinding;
 import fr.joudar.mareu.di.DI;
 import fr.joudar.mareu.model.Meeting;
-import fr.joudar.mareu.utils.onDeleteClickedListener;
+import fr.joudar.mareu.service.ApiService;
 import fr.joudar.mareu.utils.onItemClickedListener;
 
-public class MeetingsListActivity extends AppCompatActivity implements onDeleteClickedListener, onItemClickedListener{
+public class MeetingsListActivity extends AppCompatActivity implements onItemClickedListener{
 
-    List<Meeting> meetingsList;
-    onDeleteClickedListener mOnDeleteClickedListener;
-    onItemClickedListener mOnItemClickedListener;
     ActivityMeetingsListBinding binding;
+    public ApiService mApiService;
+    RecyclerView mRecyclerView;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -34,17 +33,25 @@ public class MeetingsListActivity extends AppCompatActivity implements onDeleteC
         View view = binding.getRoot();
         setContentView(view);
 
-        meetingsList = DI.getApiService().getMeetings();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, MeetingsListFragment.newInstance(meetingsList,this, this)).commit();
+        mApiService = DI.getApiService();
+        mRecyclerView = binding.recyclerViewList;
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        refreshRecyclerView(mApiService.getMeetings());
+    }
+
+    private void refreshRecyclerView(List<Meeting> items) {
+        this.mRecyclerView.setAdapter(new MeetingsListRecyclerViewAdapter(items, this));
+    }
+
+
+    @Override
+    public void onItemDetailClicked(int id) {
+
     }
 
     @Override
-    public void onDeleteClicked(Meeting meeting) {
-
-    }
-
-    @Override
-    public void onItemClicked(Meeting meeting) {
+    public void onItemDeleteClicked(int id) {
 
     }
 }

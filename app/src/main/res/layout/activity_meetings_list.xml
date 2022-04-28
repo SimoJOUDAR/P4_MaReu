@@ -8,11 +8,15 @@
     tools:context=".ui.MeetingsListActivity" >
 
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragment_container"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-    </androidx.fragment.app.FragmentContainerView>
+        android:layout_height="match_parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        app:layoutManager="LinearLayoutManager"
+        tools:listitem="@layout/meeting_item"
+        />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/button_add_meeting"

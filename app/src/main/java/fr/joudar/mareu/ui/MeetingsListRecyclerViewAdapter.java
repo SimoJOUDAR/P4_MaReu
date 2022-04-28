@@ -19,6 +19,7 @@ import fr.joudar.mareu.utils.onItemClickedListener;
 
 public class MeetingsListRecyclerViewAdapter extends RecyclerView.Adapter<MeetingsListRecyclerViewAdapter.MyViewHolder> {
 
+    private MeetingItemBinding viewHolderBinding;
     private List<Meeting> meetingList;
     private final onDeleteClickedListener mOnDeleteClickedListener;
     private final onItemClickedListener mOnItemClickedListener;
@@ -34,7 +35,7 @@ public class MeetingsListRecyclerViewAdapter extends RecyclerView.Adapter<Meetin
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         /*View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.meeting_item, parent, false);*/
-        MeetingItemBinding viewHolderBinding = MeetingItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        viewHolderBinding = MeetingItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new MyViewHolder(viewHolderBinding, mOnDeleteClickedListener, mOnItemClickedListener);
     }
 

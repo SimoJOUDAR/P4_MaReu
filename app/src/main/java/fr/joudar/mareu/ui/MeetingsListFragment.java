@@ -14,12 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import fr.joudar.mareu.R;
+import fr.joudar.mareu.databinding.FragmentMeetingsListBinding;
 import fr.joudar.mareu.model.Meeting;
 import fr.joudar.mareu.utils.onDeleteClickedListener;
 import fr.joudar.mareu.utils.onItemClickedListener;
 
 public class MeetingsListFragment extends Fragment {
 
+    private FragmentMeetingsListBinding binding;
     private RecyclerView mRecyclerView;
     List<Meeting> meetingsList;
     private onDeleteClickedListener mOnDeleteClickedListener;
@@ -41,9 +43,11 @@ public class MeetingsListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_meetings_list, container, false);
+
+        binding = FragmentMeetingsListBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
         Context context = view.getContext();
+
         mRecyclerView = (RecyclerView) view;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));

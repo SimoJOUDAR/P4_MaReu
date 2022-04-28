@@ -8,10 +8,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 
 import java.util.List;
 
 import fr.joudar.mareu.R;
+import fr.joudar.mareu.databinding.ActivityMeetingsListBinding;
 import fr.joudar.mareu.di.DI;
 import fr.joudar.mareu.model.Meeting;
 import fr.joudar.mareu.utils.onDeleteClickedListener;
@@ -22,16 +24,17 @@ public class MeetingsListActivity extends AppCompatActivity implements onDeleteC
     List<Meeting> meetingsList;
     onDeleteClickedListener mOnDeleteClickedListener;
     onItemClickedListener mOnItemClickedListener;
+    ActivityMeetingsListBinding binding;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_meetings_list);
+        binding = ActivityMeetingsListBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
         meetingsList = DI.getApiService().getMeetings();
-
-        //FragmentManager fragmentManager = getSupportFragmentManager();
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, MeetingsListFragment.newInstance(meetingsList,this, this)).commit();
     }
 

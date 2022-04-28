@@ -5,6 +5,10 @@
       <map>
         <entry key="app/src/main/res/drawable-v24/ic_baseline_add_24.xml" value="0.2315" />
         <entry key="app/src/main/res/drawable-v24/ic_baseline_delete_24.xml" value="0.1725" />
+        <entry key="app/src/main/res/drawable/ic_room_earth.xml" value="0.1725" />
+        <entry key="app/src/main/res/drawable/ic_room_jupiter.xml" value="0.1725" />
+        <entry key="app/src/main/res/drawable/ic_room_mars.xml" value="0.1725" />
+        <entry key="app/src/main/res/drawable/ic_room_neptune.xml" value="0.1725" />
         <entry key="app/src/main/res/layout/activity_meetings_list.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/fragment_meetings_list.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/meeting_item.xml" value="0.3098958333333333" />

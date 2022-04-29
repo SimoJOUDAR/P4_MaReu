@@ -13,7 +13,7 @@ import fr.joudar.mareu.service.DummyApiService;
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class DI {
 
-    private static final ApiService apiService = new DummyApiService();
+    private static ApiService apiService = new DummyApiService();
 
     /**
      * Get an instance on @{@link ApiService}

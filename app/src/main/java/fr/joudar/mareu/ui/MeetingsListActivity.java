@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -37,21 +38,23 @@ public class MeetingsListActivity extends AppCompatActivity implements onItemCli
         mRecyclerView = binding.recyclerViewList;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        refreshRecyclerView(mApiService.getMeetings());
+        refreshRecyclerViewNoFilter();
     }
 
-    private void refreshRecyclerView(List<Meeting> items) {
-        this.mRecyclerView.setAdapter(new MeetingsListRecyclerViewAdapter(items, this));
+    private void refreshRecyclerViewNoFilter() {
+        this.mRecyclerView.setAdapter(new MeetingsListRecyclerViewAdapter(mApiService.getMeetings(), this));
     }
-
 
     @Override
     public void onItemDetailClicked(int id) {
-
+        Intent i = new Intent(this, MeetingDetailActivity.class);
+        startActivity(i);
     }
 
     @Override
-    public void onItemDeleteClicked(int id) {
+    public void onItemDeleteClicked(Meeting meeting) {
+        mApiService.deleteMeeting(meeting);
 
+        refreshRecyclerViewNoFilter();
     }
 }

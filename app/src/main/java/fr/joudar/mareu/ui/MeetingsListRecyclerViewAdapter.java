@@ -54,7 +54,7 @@ public class MeetingsListRecyclerViewAdapter extends RecyclerView.Adapter<Meetin
             viewHolderBinding.itemIcon.setImageResource(meeting.getRoom().getRoomIcon());
             viewHolderBinding.meetingInfo.setText(String.format("%s - %s - %s", meeting.getTopic(), meeting.getStartTimeAsString(), meeting.getRoom().getRoomName()));
             viewHolderBinding.meetingParticipants.setText(meeting.getParticipantsAsString());
-            viewHolderBinding.deleteItemButton.setOnClickListener(View -> mOnItemClickedListener.onItemDeleteClicked(meeting.getId()));
+            viewHolderBinding.deleteItemButton.setOnClickListener(View -> mOnItemClickedListener.onItemDeleteClicked(meeting));
             viewHolderBinding.viewHolder.setOnClickListener(view -> mOnItemClickedListener.onItemDetailClicked(meeting.getId()));
         }
 

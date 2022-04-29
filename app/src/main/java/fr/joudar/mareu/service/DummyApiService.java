@@ -57,6 +57,7 @@ public class DummyApiService implements ApiService{
     @Override
     public void deleteMeeting(Meeting meeting) {
         meetingsList.remove(meeting);
+
     }
 
     @Override

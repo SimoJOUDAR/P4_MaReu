@@ -97,10 +97,16 @@ public abstract class DummySampleGenerator {
                     new String[]{DUMMY_PARTICIPANTS_LIST.get(5), DUMMY_PARTICIPANTS_LIST.get(1), DUMMY_PARTICIPANTS_LIST.get(7)})
     );
 
-    public static List<Room> generateRoomsList() {return DUMMY_ROOMS_LIST;}
+    static List<Room> generateRoomsList() {
+        return new ArrayList<>(DUMMY_ROOMS_LIST);
+    }
 
-    static List<String> generateParticipantsList() {return DUMMY_PARTICIPANTS_LIST;}
+    static List<String> generateParticipantsList() {
+        return new ArrayList<>(DUMMY_PARTICIPANTS_LIST);
+    }
 
-    static List<Meeting> generateMeetingsList() {return DUMMY_MEETINGS_LIST;}
+    static List<Meeting> generateMeetingsList() {
+        return new ArrayList<>(DUMMY_MEETINGS_LIST);
+    }
 
 }

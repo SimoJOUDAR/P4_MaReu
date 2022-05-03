@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 
 import java.util.List;
@@ -46,15 +47,15 @@ public class MeetingsListActivity extends AppCompatActivity implements onItemCli
     }
 
     @Override
-    public void onItemDetailClicked(int id) {
+    public void onItemDetailClicked(Meeting meeting) {
         Intent i = new Intent(this, MeetingDetailActivity.class);
+        i.putExtra("Meeting", (Parcelable) meeting);
         startActivity(i);
     }
 
     @Override
     public void onItemDeleteClicked(Meeting meeting) {
         mApiService.deleteMeeting(meeting);
-
         refreshRecyclerViewNoFilter();
     }
 }

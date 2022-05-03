@@ -4,7 +4,9 @@ import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.StringRes;
 
-public class Room {
+import java.io.Serializable;
+
+public class Room implements Serializable {
 
     private final String name;
 

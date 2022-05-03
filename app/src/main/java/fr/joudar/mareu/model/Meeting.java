@@ -1,11 +1,14 @@
 package fr.joudar.mareu.model;
 
 import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -14,7 +17,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-public class Meeting {
+public class Meeting implements Parcelable {
 
     private final int id;
     @NonNull
@@ -52,6 +55,30 @@ public class Meeting {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    protected Meeting(Parcel in) {
+        id = in.readInt();
+        topic = in.readString();
+        date = (LocalDate) in.readSerializable();
+        startTime = (LocalTime) in.readSerializable();
+        finishTime = (LocalTime) in.readSerializable();
+        room = (Room) in.readSerializable();
+        participants = in.createStringArray();
+    }
+
+    public static final Creator<Meeting> CREATOR = new Creator<Meeting>() {
+        @RequiresApi(api = Build.VERSION_CODES.O)
+        @Override
+        public Meeting createFromParcel(Parcel in) {
+            return new Meeting(in);
+        }
+
+        @Override
+        public Meeting[] newArray(int size) {
+            return new Meeting[size];
+        }
+    };
+
     /**
      * Get value of id
      * @return id
@@ -76,6 +103,15 @@ public class Meeting {
     @NonNull
     public LocalDate getDate() {
         return date;
+    }
+
+    /**
+     * Get value of date formatted and converted into String
+     * @return date as String
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public String getDateAsString(){
+        return date.format(DateTimeFormatter.ofPattern("dd'/'MMM", Locale.FRENCH));
     }
 
     /**
@@ -159,5 +195,22 @@ public class Meeting {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(topic);
+        parcel.writeSerializable(date);
+        parcel.writeSerializable(startTime);
+        parcel.writeSerializable(finishTime);
+        parcel.writeSerializable(room);
+        parcel.writeStringArray(participants);
     }
 }

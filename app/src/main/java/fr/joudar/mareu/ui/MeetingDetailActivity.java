@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 
 import fr.joudar.mareu.R;
@@ -24,6 +25,8 @@ public class MeetingDetailActivity extends AppCompatActivity {
         binding = ActivityMeetingDetailBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        setSupportActionBar(binding.meetingDetailToolbar);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mMeeting = this.getIntent().getParcelableExtra("Meeting");
         this.updateUI();
@@ -39,5 +42,12 @@ public class MeetingDetailActivity extends AppCompatActivity {
         binding.meetingDate.setText(mMeeting.getDateAsString());
         binding.meetingTime.setText(String.format("%s - %s", mMeeting.getStartTimeAsString(), mMeeting.getFinishTimeAsString()));
         binding.meetingParticipantsList.setText(mMeeting.getParticipantsAsString());
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_detail, menu);
+        return true;
     }
 }

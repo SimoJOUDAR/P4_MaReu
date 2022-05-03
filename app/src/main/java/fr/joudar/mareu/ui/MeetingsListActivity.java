@@ -14,8 +14,10 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.view.Menu;
 import android.view.View;
 
+import fr.joudar.mareu.R;
 import fr.joudar.mareu.databinding.ActivityMeetingsListBinding;
 import fr.joudar.mareu.di.DI;
 import fr.joudar.mareu.model.Meeting;
@@ -37,6 +39,8 @@ public class MeetingsListActivity extends AppCompatActivity implements onItemCli
         binding = ActivityMeetingsListBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        setSupportActionBar(binding.meetingListToolbar);
+
         addMeetingLauncher();
 
         mApiService = DI.getApiService();
@@ -79,5 +83,12 @@ public class MeetingsListActivity extends AppCompatActivity implements onItemCli
             Intent i = new Intent(this, AddMeetingActivity.class);
             mStartAddMeetingForResult.launch(i);
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
 }

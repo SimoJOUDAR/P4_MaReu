@@ -5,6 +5,7 @@
         android:id="@+id/create_new_meeting"
         android:contentDescription="Créer une réunion"
         android:title="Créer"
+        android:icon="@drawable/ic_baseline_save_24"
         app:showAsAction="always" />
 
 </menu>

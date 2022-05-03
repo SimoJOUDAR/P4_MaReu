@@ -1,5 +1,9 @@
 package fr.joudar.mareu.ui;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -12,9 +16,6 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
 
-import java.util.List;
-
-import fr.joudar.mareu.R;
 import fr.joudar.mareu.databinding.ActivityMeetingsListBinding;
 import fr.joudar.mareu.di.DI;
 import fr.joudar.mareu.model.Meeting;
@@ -23,9 +24,11 @@ import fr.joudar.mareu.utils.onItemClickedListener;
 
 public class MeetingsListActivity extends AppCompatActivity implements onItemClickedListener{
 
+
     ActivityMeetingsListBinding binding;
-    public ApiService mApiService;
+    ApiService mApiService;
     RecyclerView mRecyclerView;
+    ActivityResultLauncher<Intent> mStartAddMeetingForResult;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -34,15 +37,16 @@ public class MeetingsListActivity extends AppCompatActivity implements onItemCli
         binding = ActivityMeetingsListBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        addMeetingLauncher();
 
         mApiService = DI.getApiService();
         mRecyclerView = binding.recyclerViewList;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        refreshRecyclerViewNoFilter();
+        refreshRecyclerView();
     }
 
-    private void refreshRecyclerViewNoFilter() {
+    private void refreshRecyclerView() {
         this.mRecyclerView.setAdapter(new MeetingsListRecyclerViewAdapter(mApiService.getMeetings(), this));
     }
 
@@ -56,6 +60,24 @@ public class MeetingsListActivity extends AppCompatActivity implements onItemCli
     @Override
     public void onItemDeleteClicked(Meeting meeting) {
         mApiService.deleteMeeting(meeting);
-        refreshRecyclerViewNoFilter();
+        refreshRecyclerView();
+    }
+
+    private void addMeetingLauncher(){
+        mStartAddMeetingForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    Meeting newMeeting = (Meeting) result.getData().getExtras().get("newMeeting");
+                    mApiService.addMeeting(newMeeting);
+                    refreshRecyclerView();
+                }
+            }
+        });
+
+        binding.buttonAddMeeting.setOnClickListener(view -> {
+            Intent i = new Intent(this, AddMeetingActivity.class);
+            mStartAddMeetingForResult.launch(i);
+        });
     }
 }

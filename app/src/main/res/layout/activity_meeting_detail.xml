@@ -55,7 +55,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Topic"
-                    android:textSize="20sp"
+                    android:textSize="26sp"
                     android:layout_margin="15dp"
                     android:textColor="@color/black"
                     />
@@ -71,6 +71,7 @@
                     android:layout_height="wrap_content"
                     android:text="Date"
                     android:layout_margin="10dp"
+                    android:paddingStart="16dp"
                     android:drawableLeft="@drawable/ic_baseline_calendar_today_24"
                     android:drawablePadding="10dp"/>
 
@@ -80,6 +81,7 @@
                     android:layout_height="wrap_content"
                     android:text="Time"
                     android:layout_margin="10dp"
+                    android:paddingStart="16dp"
                     android:drawableLeft="@drawable/ic_baseline_access_time_24"
                     android:drawablePadding="10dp"/>
 
@@ -89,32 +91,21 @@
                     android:layout_height="wrap_content"
                     android:text="Room"
                     android:layout_margin="10dp"
+                    android:paddingStart="16dp"
                     android:drawableLeft="@drawable/ic_baseline_location_on_24"
                     android:drawablePadding="10dp"/>
 
-            </LinearLayout>
-
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            http:cardBackgroundColor="@android:color/white"
-            http:cardElevation="5dp"
-            android:layout_margin="10dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#ECEFF0" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Participants:"
-                    android:textSize="20sp"
-                    android:layout_margin="10dp"
+                    android:textSize="26sp"
+                    android:layout_margin="15dp"
                     android:textColor="@color/black"
                     />
 
@@ -128,9 +119,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Liste des participants..."
-                    android:layout_margin="15dp"/>
+                    android:layout_margin="15dp"
+                    android:paddingStart="16dp"/>
 
             </LinearLayout>
+
 
         </androidx.cardview.widget.CardView>
 

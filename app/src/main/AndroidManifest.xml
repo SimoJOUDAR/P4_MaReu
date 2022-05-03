@@ -11,10 +11,12 @@
         android:theme="@style/Theme.MaReu">
         <activity
             android:name=".ui.MeetingDetailActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".ui.MeetingsListActivity" />
         <activity
             android:name=".ui.AddMeetingActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".ui.MeetingsListActivity" />
         <activity
             android:name=".ui.MeetingsListActivity"
             android:exported="true">

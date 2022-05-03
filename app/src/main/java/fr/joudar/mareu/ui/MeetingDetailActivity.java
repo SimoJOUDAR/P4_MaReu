@@ -24,6 +24,7 @@ public class MeetingDetailActivity extends AppCompatActivity {
         binding = ActivityMeetingDetailBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mMeeting = this.getIntent().getParcelableExtra("Meeting");
         this.updateUI();
 

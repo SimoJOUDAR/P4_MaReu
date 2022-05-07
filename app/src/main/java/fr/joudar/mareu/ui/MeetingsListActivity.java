@@ -72,8 +72,8 @@ public class MeetingsListActivity extends AppCompatActivity implements onItemCli
             @Override
             public void onActivityResult(ActivityResult result) {
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                    Meeting newMeeting = (Meeting) result.getData().getExtras().get("newMeeting");
-                    mApiService.addMeeting(newMeeting);
+                    //Meeting newMeeting = (Meeting) result.getData().getExtras().get("newMeeting");
+                    //mApiService.addMeeting(newMeeting);
                     refreshRecyclerView();
                 }
             }

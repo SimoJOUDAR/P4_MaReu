@@ -34,6 +34,8 @@ public class RoomsListSpinnerAdapter extends ArrayAdapter<Room> {
         return initCustomView(position, convertView, parent);
     }
 
+    
+
     @NonNull
     private View initCustomView(int position, @Nullable View convertView, @NonNull ViewGroup parent){
 //        RoomsListSpinnerItemBinding binding = RoomsListSpinnerItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);

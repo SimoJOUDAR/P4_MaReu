@@ -42,6 +42,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:startIconContentDescription="Subject icon"
+                app:helperTextTextColor="@color/red"
                 app:startIconDrawable="@drawable/ic_baseline_subject_24">
 
                 <com.google.android.material.textfield.TextInputEditText

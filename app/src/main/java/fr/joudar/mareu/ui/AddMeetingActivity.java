@@ -9,6 +9,8 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,6 +21,8 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.material.chip.Chip;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -60,49 +64,59 @@ public class AddMeetingActivity extends AppCompatActivity {
         initParticipantsChipGroup();
     }
 
-    private void initVariables() {
-        mTopic = null;
-        mDate = null;
-        mStartTime = null;
-        mFinishTime = null;
-        mRoom = null;
-        mParticipants = null;
-        mMeeting = null;
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private void createNewMeeting(){
-        createNewMeetingId();
-        getTopicFromEditText();
-        initParticipants();
-        if (mTopic != null && mDate != null && mStartTime != null & mFinishTime != null && mRoom != null && mParticipants != null) {
-            mMeeting = new Meeting(mId, mTopic, mDate, mStartTime, mFinishTime, mRoom, mParticipants);
-            DI.getApiService().addMeeting(mMeeting);
-            Toast.makeText(this, "Meeting created", Toast.LENGTH_SHORT).show();
-        }
-    }
-
+    /**********************************************************************************************
+     *** OptionMenu
+     *********************************************************************************************/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.menu_create_meeting, menu);
         return true;
-
     }
-
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void createNewMeetingId(){
-        mId = DI.getApiService().getMeetings().size();
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.create_new_meeting){
+            createNewMeeting();
+            if (mMeeting != null){
+                ExitActivity();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
-    private void getTopicFromEditText() {
-        if (!binding.topicEditText.getText().toString().isEmpty()) {
-            mTopic = binding.topicEditText.getText().toString();
+    /**********************************************************************************************
+     *** Id
+     *********************************************************************************************/
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private boolean createNewMeetingId(){
+        mId = DI.getApiService().getMeetings().size()+1;
+        return true;
+    }
+
+    /**********************************************************************************************
+     *** Topic
+     *********************************************************************************************/
+    private boolean validateTopic() {
+        String topicInput = binding.topicEditText.getText().toString().trim();
+        onInputChange(binding.topicInputLayout, binding.topicEditText);
+
+        if (topicInput.isEmpty()) {
+            binding.topicInputLayout.setError("Field can't be empty");
+            return false;
+        }
+        else {
+            binding.topicInputLayout.setError(null);
+            mTopic = topicInput;
+            return true;
         }
     }
 
-
+    /**********************************************************************************************
+     *** Rooms
+     *********************************************************************************************/
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void initRoomsListSpinner(){
         List<Room> roomsList = DI.getApiService().getRoomsList();
@@ -111,9 +125,25 @@ public class AddMeetingActivity extends AppCompatActivity {
         binding.roomAutoCompleteTextView.setOnItemClickListener((adapterView, view, i, l) -> {
                 mRoom = roomsAdapter.getItem(i);
                 binding.roomAutoCompleteTextView.setText(mRoom.getRoomName());
+                binding.roomInputLayout.setError(null);
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private boolean validateRoom(){
+        // TODO: onTextChange => Remove error
+        if (DI.getApiService().getRoomsList().contains(mRoom)){
+            binding.roomInputLayout.setError(null);
+            return true;
+        }
+        else
+            binding.roomInputLayout.setError("Field can't be empty");
+            return false;
+    }
+
+    /**********************************************************************************************
+     *** Date
+     *********************************************************************************************/
     private void initDatePicker(){
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -135,6 +165,21 @@ public class AddMeetingActivity extends AppCompatActivity {
         });
     }
 
+    private boolean validateDate(){
+        onInputChange(binding.dateInputLayout, binding.dateEditText);
+        if (mDate == null) {
+            binding.dateInputLayout.setError("Field can't be empty");
+            return false;
+        }
+        else {
+            binding.dateInputLayout.setError(null);
+            return true;
+        }
+    }
+
+    /**********************************************************************************************
+     *** Time
+     *********************************************************************************************/
     private void initTimePicker(){
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -174,6 +219,33 @@ public class AddMeetingActivity extends AppCompatActivity {
         });
     }
 
+    private boolean validateStartTime(){
+        onInputChange(binding.startTimeInputLayout, binding.startTimeEditText);
+        if (mStartTime == null) {
+            binding.startTimeInputLayout.setError("Field can't be empty");
+            return false;
+        }
+        else {
+            binding.startTimeInputLayout.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validateFinishTime(){
+        onInputChange(binding.finishTimeInputLayout, binding.finishTimeEditText);
+        if (mFinishTime == null) {
+            binding.finishTimeInputLayout.setError("Field can't be empty");
+            return false;
+        }
+        else {
+            binding.finishTimeInputLayout.setError(null);
+            return true;
+        }
+    }
+
+    /**********************************************************************************************
+     *** Participants
+     *********************************************************************************************/
     private void initParticipantsChipGroup(){
         binding.participantsInputLayout.setEndIconOnClickListener(view -> {
             String email = binding.participantsEditText.getText().toString();
@@ -190,15 +262,30 @@ public class AddMeetingActivity extends AppCompatActivity {
     }
 
     private boolean checkEmailValidity(String email){
-        if(!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+        if(!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches() && checkEmailUniqueness(email)){
             return true;
         }
 
         else {
-            //TODO : change to show alert below view
-            Toast.makeText(this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
+            binding.participantsInputLayout.setError("Email unavailable");
+            binding.participantsInputLayout.setErrorIconDrawable(null);
             return false;
         }
+    }
+
+    private boolean checkEmailUniqueness(String email){
+        boolean isUnique = true;
+        int chipCount = binding.participantsChipGroup.getChildCount();
+        String chipEmail;
+        if (chipCount>0) {
+            for (int i = 0; i < chipCount; i++) {
+                chipEmail = ((Chip) binding.participantsChipGroup.getChildAt(i)).getText().toString().trim();
+                if (chipEmail.equals(email)) {
+                    isUnique = false;
+                }
+            }
+        }
+        return isUnique;
     }
 
     private void initParticipants(){
@@ -211,23 +298,85 @@ public class AddMeetingActivity extends AppCompatActivity {
         }
     }
 
+    private boolean validateParticipants(){
+        onInputChange(binding.participantsInputLayout, binding.participantsEditText);
+        if (mParticipants == null) {
+            binding.participantsInputLayout.setError("Field can't be empty");
+            binding.participantsInputLayout.setErrorIconDrawable(null);
+            return false;
+        }
+        else {
+            binding.finishTimeInputLayout.setError(null);
+            return true;
+        }
+    }
+
+    /**********************************************************************************************
+     *** finish Activity
+     *********************************************************************************************/
     private void ExitActivity() {
         Intent i = new Intent();
         setResult(RESULT_OK, i);
         finish();
     }
 
+    /**********************************************************************************************
+     *** Meeting
+     *********************************************************************************************/
     @RequiresApi(api = Build.VERSION_CODES.O)
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.create_new_meeting){
-            createNewMeeting();
-            if (mMeeting != null){
-                ExitActivity();
-                return true;
-            }
+    private void createNewMeeting(){
+        if (confirmationInput()) {
+            mMeeting = new Meeting(mId, mTopic, mDate, mStartTime, mFinishTime, mRoom, mParticipants);
+            DI.getApiService().addMeeting(mMeeting);
+            Toast.makeText(this, "Meeting created", Toast.LENGTH_SHORT).show();
         }
-        return super.onOptionsItemSelected(item);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private boolean confirmationInput(){
+        initParticipants();
+        boolean validInput = createNewMeetingId();
+        validInput &= validateTopic();
+        validInput &= validateRoom();
+        validInput &= validateDate();
+        validInput &= validateStartTime();
+        validInput &= validateFinishTime();
+        validInput &= validateParticipants();
+        if (validInput)
+            return true;
+        else {
+            return false;
+        }
+    }
+
+    /**********************************************************************************************
+     *** Tools
+     *********************************************************************************************/
+    private void onInputChange(TextInputLayout viewLayout, TextInputEditText view){
+        view.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                viewLayout.setError(null);
+            }
+        });
+    }
+
+    private void initVariables() {
+        mTopic = null;
+        mDate = null;
+        mStartTime = null;
+        mFinishTime = null;
+        mRoom = null;
+        mParticipants = null;
+        mMeeting = null;
     }
 
 }

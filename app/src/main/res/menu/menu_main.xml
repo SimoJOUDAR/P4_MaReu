@@ -1,4 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_filters"
+        android:contentDescription="Filter menu"
+        android:icon="@drawable/ic_baseline_filter_list_24"
+        android:title="Filters"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/menu_room_filter"
+                android:contentDescription="Room filter"
+                android:icon="@drawable/ic_baseline_location_on_24"
+                android:title="Room filter"
+                app:showAsAction="ifRoom" />
 
+            <item
+                android:id="@+id/menu_date_filter"
+                android:contentDescription="Date filter"
+                android:icon="@drawable/ic_baseline_date_range_24"
+                android:title="Date filter"
+                app:showAsAction="ifRoom" />
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/menu_more_options"
+        android:contentDescription="More options"
+        android:icon="@drawable/ic_baseline_more_vert_24"
+        android:title="More options"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/submenu_room_filter_off"
+                android:icon="@drawable/ic_baseline_location_off_24"
+                android:title="Disable room filter" />
+            <item
+                android:id="@+id/submenu_date_filter_off"
+                android:icon="@drawable/ic_baseline_web_asset_off_24"
+                android:title="Disable date filter" />
+            <item
+                android:id="@+id/submenu_all_filters_off"
+                android:icon="@drawable/ic_baseline_filter_alt_off_24"
+                android:title="Disable all filters" />
+        </menu>
+    </item>
 </menu>

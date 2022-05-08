@@ -4,6 +4,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -15,7 +16,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import fr.joudar.mareu.R;
 import fr.joudar.mareu.databinding.ActivityMeetingsListBinding;
@@ -50,10 +53,16 @@ public class MeetingsListActivity extends AppCompatActivity implements onItemCli
         refreshRecyclerView();
     }
 
+    /**********************************************************************************************
+     *** RecyclerView
+     *********************************************************************************************/
     private void refreshRecyclerView() {
         this.mRecyclerView.setAdapter(new MeetingsListRecyclerViewAdapter(mApiService.getMeetings(), this));
     }
 
+    /**********************************************************************************************
+     *** Listeners
+     *********************************************************************************************/
     @Override
     public void onItemDetailClicked(Meeting meeting) {
         Intent i = new Intent(this, MeetingDetailActivity.class);
@@ -85,10 +94,36 @@ public class MeetingsListActivity extends AppCompatActivity implements onItemCli
         });
     }
 
+    /**********************************************************************************************
+     *** OptionMenu
+     *********************************************************************************************/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_room_filter:
+                Toast.makeText(this, "Room filter checked", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.menu_date_filter:
+                Toast.makeText(this, "Date filter checked", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.submenu_room_filter_off:
+                Toast.makeText(this, "Disable room filter checked", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.submenu_date_filter_off:
+                Toast.makeText(this, "Disable date filter checked", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.submenu_all_filters_off:
+                Toast.makeText(this, "Disable all filters checked", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

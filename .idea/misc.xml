@@ -15,6 +15,9 @@
         <entry key="app/src/main/res/drawable/ic_baseline_access_time_24.xml" value="0.161" />
         <entry key="app/src/main/res/drawable/ic_baseline_calendar_today_24.xml" value="0.161" />
         <entry key="app/src/main/res/drawable/ic_baseline_close_24.xml" value="0.161" />
+        <entry key="app/src/main/res/drawable/ic_baseline_filter_alt_off_24.xml" value="0.172" />
+        <entry key="app/src/main/res/drawable/ic_baseline_location_off_24.xml" value="0.172" />
+        <entry key="app/src/main/res/drawable/ic_baseline_web_asset_off_24.xml" value="0.172" />
         <entry key="app/src/main/res/drawable/ic_room_earth.xml" value="0.1725" />
         <entry key="app/src/main/res/drawable/ic_room_jupiter.xml" value="0.1725" />
         <entry key="app/src/main/res/drawable/ic_room_mars.xml" value="0.1725" />

@@ -299,12 +299,22 @@ public class AddMeetingActivity extends AppCompatActivity {
         return isUnique;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void validateAndSaveNewParticipants(String email) {
+        if (!DI.getApiService().getAllParticipantsList().contains(email)){
+            DI.getApiService().addNewParticipant(email);
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void initParticipants(){
         int chipCount = binding.participantsChipGroup.getChildCount();
         if (chipCount>0) {
             mParticipants = new String[chipCount];
             for (int i = 0; i < chipCount; i++) {
-                mParticipants[i] = ((Chip) binding.participantsChipGroup.getChildAt(i)).getText().toString();
+                String email = ((Chip) binding.participantsChipGroup.getChildAt(i)).getText().toString();
+                mParticipants[i] = email;
+                validateAndSaveNewParticipants(email);
             }
         }
     }

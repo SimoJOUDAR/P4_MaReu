@@ -17,6 +17,8 @@ public interface ApiService {
 
     List<String> getAllParticipantsList();
 
+    void addNewParticipant(String email);
+
     List<Meeting> getMeetings();
 
     void deleteMeeting(Meeting meeting);

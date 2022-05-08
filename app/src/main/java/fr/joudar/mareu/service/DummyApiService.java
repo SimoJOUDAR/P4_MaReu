@@ -50,6 +50,11 @@ public class DummyApiService implements ApiService{
     }
 
     @Override
+    public void addNewParticipant(String email) {
+        participantsList.add(email);
+    }
+
+    @Override
     public List<Meeting> getMeetings() {
         return meetingsList;
     }

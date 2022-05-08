@@ -36,8 +36,8 @@ public class MeetingDetailActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void updateUI(){
         binding.meetingRoomImage.setImageResource(mMeeting.getRoom().getRoomIcon());
-        binding.meetingRoomName1.setText(mMeeting.getTopic());
-        binding.meetingRoomName2.setText(mMeeting.getTopic());
+        binding.meetingRoomName1.setText(mMeeting.getRoom().getRoomName());
+        binding.meetingRoomName2.setText(mMeeting.getRoom().getRoomName());
         binding.meetingTopic.setText(mMeeting.getTopic());
         binding.meetingDate.setText(mMeeting.getDateAsString());
         binding.meetingTime.setText(String.format("%s - %s", mMeeting.getStartTimeAsString(), mMeeting.getFinishTimeAsString()));

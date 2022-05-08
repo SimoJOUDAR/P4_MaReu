@@ -159,8 +159,8 @@
                 app:startIconContentDescription="Participants icon"
                 app:startIconDrawable="@drawable/ic_baseline_people_24">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/participants_edit_text"
+                <AutoCompleteTextView
+                    android:id="@+id/participants_auto_complete_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Participants"

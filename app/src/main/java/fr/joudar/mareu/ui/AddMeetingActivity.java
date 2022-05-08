@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -246,19 +247,29 @@ public class AddMeetingActivity extends AppCompatActivity {
     /**********************************************************************************************
      *** Participants
      *********************************************************************************************/
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void initParticipantsChipGroup(){
+        initAutoCompleteAdapter();
         binding.participantsInputLayout.setEndIconOnClickListener(view -> {
-            String email = binding.participantsEditText.getText().toString();
+            String email = binding.participantsAutoCompleteTextView.getText().toString().trim();
             if (checkEmailValidity(email)) {
+                binding.participantsInputLayout.setError(null);
                 Chip chip = (Chip) LayoutInflater.from(this).inflate(R.layout.chip, null, false);
                 chip.setText(email);
                 chip.setOnCloseIconClickListener(view1 -> {
                     binding.participantsChipGroup.removeView(view1);
                 });
                 binding.participantsChipGroup.addView(chip);
-                binding.participantsEditText.setText("");
+                binding.participantsAutoCompleteTextView.setText("");
             }
         });
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void initAutoCompleteAdapter(){
+        List<String> data = DI.getApiService().getAllParticipantsList();
+        ArrayAdapter<String> adapter = new ArrayAdapter(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, data);
+        binding.participantsAutoCompleteTextView.setAdapter(adapter);
     }
 
     private boolean checkEmailValidity(String email){
@@ -299,7 +310,6 @@ public class AddMeetingActivity extends AppCompatActivity {
     }
 
     private boolean validateParticipants(){
-        onInputChange(binding.participantsInputLayout, binding.participantsEditText);
         if (mParticipants == null) {
             binding.participantsInputLayout.setError("Field can't be empty");
             binding.participantsInputLayout.setErrorIconDrawable(null);

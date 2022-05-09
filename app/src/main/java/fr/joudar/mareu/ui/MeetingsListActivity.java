@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.os.Parcelable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
@@ -27,6 +29,7 @@ import java.util.Calendar;
 
 import fr.joudar.mareu.R;
 import fr.joudar.mareu.databinding.ActivityMeetingsListBinding;
+import fr.joudar.mareu.databinding.RoomFilterDialogBinding;
 import fr.joudar.mareu.di.DI;
 import fr.joudar.mareu.model.Meeting;
 import fr.joudar.mareu.model.Room;
@@ -41,6 +44,7 @@ public class MeetingsListActivity extends AppCompatActivity implements onItemCli
     RecyclerView mRecyclerView;
     ActivityResultLauncher<Intent> mStartAddMeetingForResult;
     LocalDate mFilterDate;
+    //RoomFilterDialogBinding dialogBinding;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -149,6 +153,13 @@ public class MeetingsListActivity extends AppCompatActivity implements onItemCli
         Toast.makeText(this, "Room filter checked", Toast.LENGTH_SHORT).show();
         //Display spinner
         //On selected launch: refreshRecyclerViewWithRoomFilter(room);
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.room_filter_dialog);
+
+        Button dialogBinding = (Button) dialog.findViewById(R.id.dialog_button);
+        dialogBinding.setOnClickListener(view -> dialog.dismiss());
+
+        dialog.show();
     }
 
     private void getDateFilter(){

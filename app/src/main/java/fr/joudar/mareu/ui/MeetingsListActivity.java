@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,12 +19,17 @@ import android.os.Parcelable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.Toast;
+
+import java.time.LocalDate;
+import java.util.Calendar;
 
 import fr.joudar.mareu.R;
 import fr.joudar.mareu.databinding.ActivityMeetingsListBinding;
 import fr.joudar.mareu.di.DI;
 import fr.joudar.mareu.model.Meeting;
+import fr.joudar.mareu.model.Room;
 import fr.joudar.mareu.service.ApiService;
 import fr.joudar.mareu.utils.onItemClickedListener;
 
@@ -34,6 +40,7 @@ public class MeetingsListActivity extends AppCompatActivity implements onItemCli
     ApiService mApiService;
     RecyclerView mRecyclerView;
     ActivityResultLauncher<Intent> mStartAddMeetingForResult;
+    LocalDate mFilterDate;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -58,6 +65,14 @@ public class MeetingsListActivity extends AppCompatActivity implements onItemCli
      *********************************************************************************************/
     private void refreshRecyclerView() {
         this.mRecyclerView.setAdapter(new MeetingsListRecyclerViewAdapter(mApiService.getMeetings(), this));
+    }
+
+    private void refreshRecyclerViewWithRoomFilter(Room room) {
+        this.mRecyclerView.setAdapter(new MeetingsListRecyclerViewAdapter(mApiService.MeetingsListFilteredByRoom(room), this));
+    }
+
+    private void refreshRecyclerViewWithDateFilter(LocalDate date) {
+        this.mRecyclerView.setAdapter(new MeetingsListRecyclerViewAdapter(mApiService.MeetingsListFilteredByDate(date), this));
     }
 
     /**********************************************************************************************
@@ -108,22 +123,61 @@ public class MeetingsListActivity extends AppCompatActivity implements onItemCli
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.menu_room_filter:
-                Toast.makeText(this, "Room filter checked", Toast.LENGTH_SHORT).show();
+                startRoomFilter();
                 return true;
             case R.id.menu_date_filter:
-                Toast.makeText(this, "Date filter checked", Toast.LENGTH_SHORT).show();
+                getDateFilter();
                 return true;
             case R.id.submenu_room_filter_off:
+                //removeRoomFilter();
                 Toast.makeText(this, "Disable room filter checked", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.submenu_date_filter_off:
+                //removeDateFilter();
                 Toast.makeText(this, "Disable date filter checked", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.submenu_all_filters_off:
+                removeAllFilters();
                 Toast.makeText(this, "Disable all filters checked", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    private void startRoomFilter() {
+        Toast.makeText(this, "Room filter checked", Toast.LENGTH_SHORT).show();
+        //Display spinner
+        //On selected launch: refreshRecyclerViewWithRoomFilter(room);
+    }
+
+    private void getDateFilter(){
+        //Toast.makeText(this, "Date filter checked", Toast.LENGTH_SHORT).show();
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH);
+        int year = calendar.get(Calendar.YEAR);
+
+        DatePickerDialog picker = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                mFilterDate = LocalDate.of(i, i1+1, i2);
+                refreshRecyclerViewWithDateFilter(mFilterDate);
+            }
+        }, year, month, day);
+        picker.show();
+    }
+
+    private void removeAllFilters() {
+        refreshRecyclerView();
+    }
+
+//    @RequiresApi(api = Build.VERSION_CODES.O)
+//    private void toastTest(LocalDate date) {
+//        Toast.makeText(this, date.toString()+"  "+ LocalDate.now().toString(), Toast.LENGTH_SHORT).show();
+////        if(date.isEqual(LocalDate.now())){
+////            Toast.makeText(this, "LocalDate isEqual works", Toast.LENGTH_SHORT).show();
+////        }
+//    }
 }

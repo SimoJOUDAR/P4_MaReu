@@ -27,7 +27,7 @@ public interface ApiService {
 
     boolean isRoomAvailable(Room room, LocalDate date, LocalTime startTime, LocalTime finishTime);
 
-    List<Meeting> MeetingsListFilteredByRoom(List<String> selectedRooms);
+    List<Meeting> MeetingsListFilteredByRoom(Room room);
 
     List<Meeting> MeetingsListFilteredByDate(LocalDate date);
 

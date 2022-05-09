@@ -6,6 +6,7 @@ import androidx.annotation.RequiresApi;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.joudar.mareu.model.Meeting;
@@ -77,12 +78,18 @@ public class DummyApiService implements ApiService{
     }
 
     @Override
-    public List<Meeting> MeetingsListFilteredByRoom(List<String> selectedRooms) {
+    public List<Meeting> MeetingsListFilteredByRoom(Room room) {
         return null;
     }
 
     @Override
     public List<Meeting> MeetingsListFilteredByDate(LocalDate date) {
-        return null;
+        List<Meeting> meetings = new ArrayList<>();
+        for (Meeting meeting : meetingsList){
+            if (meeting.getDate().isEqual(date)){
+                meetings.add(meeting);
+            }
+        }
+        return meetings;
     }
 }

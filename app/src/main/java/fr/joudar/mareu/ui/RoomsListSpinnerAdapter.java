@@ -14,7 +14,6 @@ import androidx.annotation.Nullable;
 import java.util.List;
 
 import fr.joudar.mareu.R;
-import fr.joudar.mareu.databinding.RoomsListSpinnerItemBinding;
 import fr.joudar.mareu.model.Room;
 
 public class RoomsListSpinnerAdapter extends ArrayAdapter<Room> {
@@ -34,16 +33,8 @@ public class RoomsListSpinnerAdapter extends ArrayAdapter<Room> {
         return initCustomView(position, convertView, parent);
     }
 
-    
-
     @NonNull
     private View initCustomView(int position, @Nullable View convertView, @NonNull ViewGroup parent){
-//        RoomsListSpinnerItemBinding binding = RoomsListSpinnerItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-//        Room room = (Room) getItem(position);
-//        binding.roomsListSpinnerItemIcon.setImageResource(room.getRoomIcon());
-//        binding.roomsListSpinnerItemName.setText(room.getRoomName());
-//        return binding.getRoot();
-
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.rooms_list_spinner_item, parent, false);
         }
@@ -53,6 +44,5 @@ public class RoomsListSpinnerAdapter extends ArrayAdapter<Room> {
         icon.setImageResource(room.getRoomIcon());
         name.setText(room.getRoomName());
         return convertView;
-
     }
 }

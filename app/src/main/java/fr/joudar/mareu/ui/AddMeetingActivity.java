@@ -151,12 +151,11 @@ public class AddMeetingActivity extends AppCompatActivity {
         int month = calendar.get(Calendar.MONTH);
         int year = calendar.get(Calendar.YEAR);
 
-
         DatePickerDialog picker = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                mDate = LocalDate.of(i, i1, i2);
+                mDate = LocalDate.of(i, i1+1, i2);
                 binding.dateEditText.setText(String.format("%d/%d/%d", i2, i1+1, i));
             }
         }, year, month, day);
@@ -197,7 +196,6 @@ public class AddMeetingActivity extends AppCompatActivity {
                     mFinishTime = LocalTime.of(i, i1).plusMinutes(15);
                     binding.finishTimeEditText.setText(String.format("%d:%d", mFinishTime.getHour(), mFinishTime.getMinute()));
                 }
-
             }
         }, hour, minute, android.text.format.DateFormat.is24HourFormat(this));
 

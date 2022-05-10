@@ -57,6 +57,5 @@ public class MeetingsListRecyclerViewAdapter extends RecyclerView.Adapter<Meetin
             viewHolderBinding.deleteItemButton.setOnClickListener(View -> mOnItemClickedListener.onItemDeleteClicked(meeting));
             viewHolderBinding.viewHolder.setOnClickListener(view -> mOnItemClickedListener.onItemDetailClicked(meeting));
         }
-
     }
 }

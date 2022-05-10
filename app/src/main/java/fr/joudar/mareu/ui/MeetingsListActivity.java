@@ -20,19 +20,15 @@ import android.os.Parcelable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.time.LocalDate;
 import java.util.Calendar;
 
 import fr.joudar.mareu.R;
 import fr.joudar.mareu.databinding.ActivityMeetingsListBinding;
-import fr.joudar.mareu.databinding.RoomFilterDialogBinding;
 import fr.joudar.mareu.di.DI;
 import fr.joudar.mareu.model.Meeting;
 import fr.joudar.mareu.model.Room;
@@ -103,8 +99,6 @@ public class MeetingsListActivity extends AppCompatActivity implements onItemCli
             @Override
             public void onActivityResult(ActivityResult result) {
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                    //Meeting newMeeting = (Meeting) result.getData().getExtras().get("newMeeting");
-                    //mApiService.addMeeting(newMeeting);
                     refreshRecyclerView();
                 }
             }
@@ -135,17 +129,8 @@ public class MeetingsListActivity extends AppCompatActivity implements onItemCli
             case R.id.menu_date_filter:
                 getDateFilter();
                 return true;
-            case R.id.submenu_room_filter_off:
-                //removeRoomFilter();
-                Toast.makeText(this, "Disable room filter checked", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.submenu_date_filter_off:
-                //removeDateFilter();
-                Toast.makeText(this, "Disable date filter checked", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.submenu_all_filters_off:
+            case R.id.menu_all_filters_off:
                 removeAllFilters();
-                Toast.makeText(this, "Disable all filters checked", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

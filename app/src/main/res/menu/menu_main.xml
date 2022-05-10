@@ -25,24 +25,10 @@
     </item>
 
     <item
-        android:id="@+id/menu_more_options"
-        android:contentDescription="More options"
-        android:icon="@drawable/ic_baseline_more_vert_24"
-        android:title="More options"
+        android:id="@+id/menu_all_filters_off"
+        android:contentDescription="Disable all filters"
+        android:icon="@drawable/ic_baseline_filter_alt_off_24"
+        android:title="Disable all filters"
         app:showAsAction="always">
-        <menu>
-            <item
-                android:id="@+id/submenu_room_filter_off"
-                android:icon="@drawable/ic_baseline_location_off_24"
-                android:title="Disable room filter" />
-            <item
-                android:id="@+id/submenu_date_filter_off"
-                android:icon="@drawable/ic_baseline_web_asset_off_24"
-                android:title="Disable date filter" />
-            <item
-                android:id="@+id/submenu_all_filters_off"
-                android:icon="@drawable/ic_baseline_filter_alt_off_24"
-                android:title="Disable all filters" />
-        </menu>
     </item>
 </menu>

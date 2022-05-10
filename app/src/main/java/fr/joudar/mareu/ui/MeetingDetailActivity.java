@@ -10,7 +10,6 @@ import android.view.View;
 
 import fr.joudar.mareu.R;
 import fr.joudar.mareu.databinding.ActivityMeetingDetailBinding;
-import fr.joudar.mareu.databinding.ActivityMeetingsListBinding;
 import fr.joudar.mareu.model.Meeting;
 
 public class MeetingDetailActivity extends AppCompatActivity {

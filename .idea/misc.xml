@@ -24,7 +24,7 @@
         <entry key="app/src/main/res/drawable/ic_room_mars.xml" value="0.1725" />
         <entry key="app/src/main/res/drawable/ic_room_neptune.xml" value="0.1725" />
         <entry key="app/src/main/res/layout/activity_add_meeting.xml" value="0.3098958333333333" />
-        <entry key="app/src/main/res/layout/activity_meeting_detail.xml" value="0.3025048828125" />
+        <entry key="app/src/main/res/layout/activity_meeting_detail.xml" value="0.2823654174804688" />
         <entry key="app/src/main/res/layout/activity_meetings_list.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/chip.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/dialog_fragment_date_filter.xml" value="0.3098958333333333" />

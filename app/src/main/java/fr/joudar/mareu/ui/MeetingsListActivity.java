@@ -20,8 +20,11 @@ import android.os.Parcelable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.time.LocalDate;
@@ -44,7 +47,7 @@ public class MeetingsListActivity extends AppCompatActivity implements onItemCli
     RecyclerView mRecyclerView;
     ActivityResultLauncher<Intent> mStartAddMeetingForResult;
     LocalDate mFilterDate;
-    //RoomFilterDialogBinding dialogBinding;
+    Room mFilterRoom;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -150,20 +153,23 @@ public class MeetingsListActivity extends AppCompatActivity implements onItemCli
     }
 
     private void startRoomFilter() {
-        Toast.makeText(this, "Room filter checked", Toast.LENGTH_SHORT).show();
-        //Display spinner
-        //On selected launch: refreshRecyclerViewWithRoomFilter(room);
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.room_filter_dialog);
 
-        Button dialogBinding = (Button) dialog.findViewById(R.id.dialog_button);
-        dialogBinding.setOnClickListener(view -> dialog.dismiss());
+        Button dialogButton = (Button) dialog.findViewById(R.id.dialog_button);
+        dialogButton.setOnClickListener(view -> dialog.dismiss());
 
+        ListView dialogListView = (ListView) dialog.findViewById(R.id.dialog_listview);
+        RoomsListSpinnerAdapter dialogAdapter = new RoomsListSpinnerAdapter(this, R.layout.rooms_list_spinner_item, mApiService.getRoomsList());
+        dialogListView.setAdapter(dialogAdapter);
+        dialogListView.setOnItemClickListener((adapterView, view, i, l) -> {
+            mFilterRoom = mApiService.getRoomsList().get(i);
+            refreshRecyclerViewWithRoomFilter(mFilterRoom);
+        });
         dialog.show();
     }
 
     private void getDateFilter(){
-        //Toast.makeText(this, "Date filter checked", Toast.LENGTH_SHORT).show();
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int month = calendar.get(Calendar.MONTH);
@@ -184,11 +190,4 @@ public class MeetingsListActivity extends AppCompatActivity implements onItemCli
         refreshRecyclerView();
     }
 
-//    @RequiresApi(api = Build.VERSION_CODES.O)
-//    private void toastTest(LocalDate date) {
-//        Toast.makeText(this, date.toString()+"  "+ LocalDate.now().toString(), Toast.LENGTH_SHORT).show();
-////        if(date.isEqual(LocalDate.now())){
-////            Toast.makeText(this, "LocalDate isEqual works", Toast.LENGTH_SHORT).show();
-////        }
-//    }
 }

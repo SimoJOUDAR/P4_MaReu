@@ -79,7 +79,13 @@ public class DummyApiService implements ApiService{
 
     @Override
     public List<Meeting> MeetingsListFilteredByRoom(Room room) {
-        return null;
+        List<Meeting> meetings = new ArrayList<>();
+        for (Meeting meeting : meetingsList){
+            if (meeting.getRoom().equals(room)){
+                meetings.add(meeting);
+            }
+        }
+        return meetings;
     }
 
     @Override

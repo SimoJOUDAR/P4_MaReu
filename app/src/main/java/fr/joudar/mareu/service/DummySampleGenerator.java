@@ -16,6 +16,9 @@ import fr.joudar.mareu.R;
 import fr.joudar.mareu.model.Meeting;
 import fr.joudar.mareu.model.Room;
 
+/**
+ * Data sample generator for demonstrations
+ */
 @RequiresApi(api = Build.VERSION_CODES.O)
 public abstract class DummySampleGenerator {
 

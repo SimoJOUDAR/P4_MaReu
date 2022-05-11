@@ -17,24 +17,40 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+/**
+ * Model object representing a Meeting
+ */
 public class Meeting implements Parcelable {
 
+    /** Identifier */
     private final int id;
+
+    /** Meeting's topic */
     @NonNull
     private final String topic;
+
+    /** Meeting's date */
     @NonNull
     private final LocalDate date;
+
+    /** Meeting's start time */
     @NonNull
     private final LocalTime startTime;
+
+    /** Meeting's finish time */
     @NonNull
     private final LocalTime finishTime;
+
+    /** Meeting room */
     @NonNull
     private final Room room;
+
+    /** Meeting's participants email list */
     @NonNull
     private final String[] participants;
 
     /**
-     * Constructor
+     * Constructor.
      * @param id
      * @param topic
      * @param date

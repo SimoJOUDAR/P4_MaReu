@@ -12,6 +12,9 @@ import fr.joudar.mareu.R;
 import fr.joudar.mareu.databinding.ActivityMeetingDetailBinding;
 import fr.joudar.mareu.model.Meeting;
 
+/**
+ * Activity to displays meeting info
+ */
 public class MeetingDetailActivity extends AppCompatActivity {
 
     ActivityMeetingDetailBinding binding;
@@ -32,6 +35,13 @@ public class MeetingDetailActivity extends AppCompatActivity {
 
     }
 
+    /**********************************************************************************************
+     *** UI
+     *********************************************************************************************/
+
+    /**
+     * Update UI with the correct data.
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void updateUI(){
         binding.meetingRoomImage.setImageResource(mMeeting.getRoom().getRoomIcon());
@@ -43,6 +53,15 @@ public class MeetingDetailActivity extends AppCompatActivity {
         binding.meetingParticipantsList.setText(mMeeting.getParticipantsAsString());
     }
 
+    /**********************************************************************************************
+     *** OptionMenu
+     *********************************************************************************************/
+
+    /**
+     * To inflate our own custom Option Menu.
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);

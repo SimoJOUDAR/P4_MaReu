@@ -35,6 +35,9 @@ import fr.joudar.mareu.model.Room;
 import fr.joudar.mareu.service.ApiService;
 import fr.joudar.mareu.utils.onItemClickedListener;
 
+/**
+ * Main Activity to display the list of all meetings and show options
+ */
 public class MeetingsListActivity extends AppCompatActivity implements onItemClickedListener{
 
 
@@ -66,14 +69,25 @@ public class MeetingsListActivity extends AppCompatActivity implements onItemCli
     /**********************************************************************************************
      *** RecyclerView
      *********************************************************************************************/
+    /**
+     * Refresh the RecyclerView with unfiltered data.
+     */
     private void refreshRecyclerView() {
         this.mRecyclerView.setAdapter(new MeetingsListRecyclerViewAdapter(mApiService.getMeetings(), this));
     }
 
+    /**
+     * Refresh the RecyclerView with room filtered data.
+     * @param room
+     */
     private void refreshRecyclerViewWithRoomFilter(Room room) {
         this.mRecyclerView.setAdapter(new MeetingsListRecyclerViewAdapter(mApiService.MeetingsListFilteredByRoom(room), this));
     }
 
+    /**
+     * Refresh the RecyclerView with date filtered data.
+     * @param date
+     */
     private void refreshRecyclerViewWithDateFilter(LocalDate date) {
         this.mRecyclerView.setAdapter(new MeetingsListRecyclerViewAdapter(mApiService.MeetingsListFilteredByDate(date), this));
     }
@@ -81,6 +95,11 @@ public class MeetingsListActivity extends AppCompatActivity implements onItemCli
     /**********************************************************************************************
      *** Listeners
      *********************************************************************************************/
+
+    /**
+     * Launches the MeetingDetailActivity to display the meeting's info
+     * @param meeting
+     */
     @Override
     public void onItemDetailClicked(Meeting meeting) {
         Intent i = new Intent(this, MeetingDetailActivity.class);
@@ -88,12 +107,19 @@ public class MeetingsListActivity extends AppCompatActivity implements onItemCli
         startActivity(i);
     }
 
+    /**
+     * Deletes a meeting from the list.
+     * @param meeting
+     */
     @Override
     public void onItemDeleteClicked(Meeting meeting) {
         mApiService.deleteMeeting(meeting);
         refreshRecyclerView();
     }
 
+    /**
+     * Configures the "add meeting" button to launch the AddMeetingActivity.
+     */
     private void addMeetingLauncher(){
         mStartAddMeetingForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
@@ -113,6 +139,12 @@ public class MeetingsListActivity extends AppCompatActivity implements onItemCli
     /**********************************************************************************************
      *** OptionMenu
      *********************************************************************************************/
+
+    /**
+     * To inflate our own custom Option Menu.
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -120,6 +152,11 @@ public class MeetingsListActivity extends AppCompatActivity implements onItemCli
         return true;
     }
 
+    /**
+     * Configures the Listeners for our custom Option Menu.
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
@@ -127,7 +164,7 @@ public class MeetingsListActivity extends AppCompatActivity implements onItemCli
                 startRoomFilter();
                 return true;
             case R.id.menu_date_filter:
-                getDateFilter();
+                startDateFilter();
                 return true;
             case R.id.menu_all_filters_off:
                 removeAllFilters();
@@ -137,6 +174,9 @@ public class MeetingsListActivity extends AppCompatActivity implements onItemCli
         }
     }
 
+    /**
+     * Launches a room picker dialog that allows to choose a Room to filter the meeting list with.
+     */
     private void startRoomFilter() {
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.room_filter_dialog);
@@ -154,7 +194,10 @@ public class MeetingsListActivity extends AppCompatActivity implements onItemCli
         dialog.show();
     }
 
-    private void getDateFilter(){
+    /**
+     * Launches a DatePicker dialog that allows to choose a date to filter the meeting list with.
+     */
+    private void startDateFilter(){
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int month = calendar.get(Calendar.MONTH);
@@ -171,6 +214,9 @@ public class MeetingsListActivity extends AppCompatActivity implements onItemCli
         picker.show();
     }
 
+    /**
+     * Removes all filters
+     */
     private void removeAllFilters() {
         refreshRecyclerView();
     }

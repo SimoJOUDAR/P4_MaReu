@@ -16,8 +16,17 @@ import java.util.List;
 import fr.joudar.mareu.R;
 import fr.joudar.mareu.model.Room;
 
+/**
+ * Rooms List Adapter.
+ */
 public class RoomsListSpinnerAdapter extends ArrayAdapter<Room> {
 
+    /**
+     * Constructor.
+     * @param context
+     * @param resource
+     * @param objects
+     */
     public RoomsListSpinnerAdapter(@NonNull Context context, int resource, @NonNull List<Room> objects) {
         super(context, resource, objects);
     }
@@ -33,6 +42,13 @@ public class RoomsListSpinnerAdapter extends ArrayAdapter<Room> {
         return initCustomView(position, convertView, parent);
     }
 
+    /**
+     * Item view UI updates.
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
     @NonNull
     private View initCustomView(int position, @Nullable View convertView, @NonNull ViewGroup parent){
         if (convertView == null) {

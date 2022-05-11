@@ -14,12 +14,20 @@ import fr.joudar.mareu.databinding.MeetingItemBinding;
 import fr.joudar.mareu.model.Meeting;
 import fr.joudar.mareu.utils.onItemClickedListener;
 
+/**
+ * MeetingsListActivity RecyclerView Adapter.
+ */
 public class MeetingsListRecyclerViewAdapter extends RecyclerView.Adapter<MeetingsListRecyclerViewAdapter.MyViewHolder> {
 
     private MeetingItemBinding viewHolderBinding;
     private List<Meeting> mMeetingList;
     private final onItemClickedListener mOnItemClickedListener;
-    
+
+    /**
+     * Constructor.
+     * @param meetingList
+     * @param mOnItemClickedListener
+     */
     public MeetingsListRecyclerViewAdapter(List<Meeting> meetingList, onItemClickedListener mOnItemClickedListener){
         this.mMeetingList = meetingList;
         this.mOnItemClickedListener = mOnItemClickedListener;
@@ -50,6 +58,10 @@ public class MeetingsListRecyclerViewAdapter extends RecyclerView.Adapter<Meetin
         }
 
         @RequiresApi(api = Build.VERSION_CODES.O)
+
+        /**
+         * Makes all ViewHolder views bindings.
+         */
         public void makeBindings(@NonNull final Meeting meeting){
             viewHolderBinding.itemIcon.setImageResource(meeting.getRoom().getRoomIcon());
             viewHolderBinding.meetingInfo.setText(String.format("%s - %s - %s", meeting.getTopic(), meeting.getStartTimeAsString(), meeting.getRoom().getRoomName()));

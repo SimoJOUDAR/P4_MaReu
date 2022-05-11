@@ -68,6 +68,12 @@ public class AddMeetingActivity extends AppCompatActivity {
     /**********************************************************************************************
      *** OptionMenu
      *********************************************************************************************/
+
+    /**
+     * To inflate our own custom Option Menu.
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -75,6 +81,11 @@ public class AddMeetingActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Configures the Listener for our custom Option Menu.
+     * @param item
+     * @return true if a new Meeting is successfully created and finishes the Activity.
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -91,15 +102,26 @@ public class AddMeetingActivity extends AppCompatActivity {
     /**********************************************************************************************
      *** Id
      *********************************************************************************************/
+
+    /**
+     * To auto-generate an Id for the new Meeting being created.
+     * @return true after assigning the Id value to the mId field.
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     private boolean createNewMeetingId(){
-        mId = DI.getApiService().getMeetings().size()+1;
+        int lastIterator = DI.getApiService().getMeetings().size()-1;
+        mId = DI.getApiService().getMeetings().get(lastIterator).getId()+1;
         return true;
     }
 
     /**********************************************************************************************
      *** Topic
      *********************************************************************************************/
+
+    /**
+     * Captures the topic Input and assigns it the mTopic field if the input is valid.
+     * @return true if the mTopic field contains a valid value. Otherwise, false and shows an error.
+     */
     private boolean validateTopic() {
         String topicInput = binding.topicEditText.getText().toString().trim();
         onInputChange(binding.topicInputLayout, binding.topicEditText);
@@ -118,6 +140,10 @@ public class AddMeetingActivity extends AppCompatActivity {
     /**********************************************************************************************
      *** Rooms
      *********************************************************************************************/
+
+    /**
+     * Initializes the spinner for the Room list and configures the Listener to pick up the chosen Room and assigns it to the mRoom field.
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void initRoomsListSpinner(){
         List<Room> roomsList = DI.getApiService().getRoomsList();
@@ -130,6 +156,10 @@ public class AddMeetingActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Checks if the mRoom field has been assigned correctly.
+     * @return true if the mRoom field contains a valid value. Otherwise, false and shows an error.
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     private boolean validateRoom(){
         // TODO: onTextChange => Remove error
@@ -145,6 +175,10 @@ public class AddMeetingActivity extends AppCompatActivity {
     /**********************************************************************************************
      *** Date
      *********************************************************************************************/
+
+    /**
+     * Initializes the DatePicker and configures the Listener to pick up the chosen date and assigns it to the mDate field.
+     */
     private void initDatePicker(){
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -165,6 +199,10 @@ public class AddMeetingActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Checks if the mDate field has been assigned correctly.
+     * @return true if the mDate field contains a valid value. Otherwise, false and shows an error.
+     */
     private boolean validateDate(){
         onInputChange(binding.dateInputLayout, binding.dateEditText);
         if (mDate == null) {
@@ -180,6 +218,10 @@ public class AddMeetingActivity extends AppCompatActivity {
     /**********************************************************************************************
      *** Time
      *********************************************************************************************/
+
+    /**
+     * Initializes the TimePickers and configures the Listeners to pick up the chosen times and assigns them to the mStartTime and mFinishTime fields.
+     */
     private void initTimePicker(){
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -218,6 +260,10 @@ public class AddMeetingActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Checks if the mStartTime field has been assigned correctly.
+     * @return true if the mStartTime field contains a valid value. Otherwise, false and shows an error.
+     */
     private boolean validateStartTime(){
         onInputChange(binding.startTimeInputLayout, binding.startTimeEditText);
         if (mStartTime == null) {
@@ -230,6 +276,10 @@ public class AddMeetingActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Checks if the mFinishTime field has been assigned correctly.
+     * @return true if the mFinishTime field contains a valid value. Otherwise, false and shows an error.
+     */
     private boolean validateFinishTime(){
         onInputChange(binding.finishTimeInputLayout, binding.finishTimeEditText);
         if (mFinishTime == null) {
@@ -245,6 +295,10 @@ public class AddMeetingActivity extends AppCompatActivity {
     /**********************************************************************************************
      *** Participants
      *********************************************************************************************/
+
+    /**
+     * Configures the participants "add button" Listener to pick up only valid inputs and assign them to new chips.
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void initParticipantsChipGroup(){
         initAutoCompleteAdapter();
@@ -263,6 +317,9 @@ public class AddMeetingActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Initializes the Participants AutoComplete with the correct data.
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void initAutoCompleteAdapter(){
         List<String> data = DI.getApiService().getAllParticipantsList();
@@ -270,6 +327,11 @@ public class AddMeetingActivity extends AppCompatActivity {
         binding.participantsAutoCompleteTextView.setAdapter(adapter);
     }
 
+    /**
+     * Checks email validity.
+     * @param email input.
+     * @return true if the email is valid. Otherwise, false and shows an error.
+     */
     private boolean checkEmailValidity(String email){
         if(!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches() && checkEmailUniqueness(email)){
             return true;
@@ -282,6 +344,10 @@ public class AddMeetingActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Checks if the new email input doesn't already exist in the ChipGroup.
+     * @return true if the email is new and doesn't exist in the ChipGroup. Otherwise, false.
+     */
     private boolean checkEmailUniqueness(String email){
         boolean isUnique = true;
         int chipCount = binding.participantsChipGroup.getChildCount();
@@ -297,6 +363,10 @@ public class AddMeetingActivity extends AppCompatActivity {
         return isUnique;
     }
 
+    /**
+     * Adds the new email input to the Participants List if it doesn't already contains it. To keep email suggestions updated.
+     * @param email
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void validateAndSaveNewParticipants(String email) {
         if (!DI.getApiService().getAllParticipantsList().contains(email)){
@@ -304,6 +374,9 @@ public class AddMeetingActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Assigns chip emails to the mParticipants field.
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void initParticipants(){
         int chipCount = binding.participantsChipGroup.getChildCount();
@@ -317,6 +390,10 @@ public class AddMeetingActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Checks if the mParticipants field has been assigned correctly.
+     * @return true if mParticipants field contains a valid value. Otherwise, false and shows an error.
+     */
     private boolean validateParticipants(){
         if (mParticipants == null) {
             binding.participantsInputLayout.setError("Field can't be empty");
@@ -332,6 +409,10 @@ public class AddMeetingActivity extends AppCompatActivity {
     /**********************************************************************************************
      *** finish Activity
      *********************************************************************************************/
+
+    /**
+     * To finish the current activity and return back to the main Activity.
+     */
     private void ExitActivity() {
         Intent i = new Intent();
         setResult(RESULT_OK, i);
@@ -341,6 +422,10 @@ public class AddMeetingActivity extends AppCompatActivity {
     /**********************************************************************************************
      *** Meeting
      *********************************************************************************************/
+
+    /**
+     * Checks if all fields are assigned correctly to create a new Meeting and add it to the Meeting list.
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void createNewMeeting(){
         if (confirmationInput()) {
@@ -350,6 +435,10 @@ public class AddMeetingActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Checks if all inputs and assignments are valid.
+     * @return true if all inputs and assignments are valid. Otherwise, false.
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     private boolean confirmationInput(){
         initParticipants();
@@ -370,6 +459,12 @@ public class AddMeetingActivity extends AppCompatActivity {
     /**********************************************************************************************
      *** Tools
      *********************************************************************************************/
+
+    /**
+     * Configure the afterTextChanged Listener to remove errors during new inputs.
+     * @param viewLayout
+     * @param view
+     */
     private void onInputChange(TextInputLayout viewLayout, TextInputEditText view){
         view.addTextChangedListener(new TextWatcher() {
             @Override
@@ -387,6 +482,9 @@ public class AddMeetingActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Initializes all fields to null.
+     */
     private void initVariables() {
         mTopic = null;
         mDate = null;

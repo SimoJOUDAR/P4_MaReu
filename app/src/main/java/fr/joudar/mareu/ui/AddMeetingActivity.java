@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
@@ -303,17 +304,7 @@ public class AddMeetingActivity extends AppCompatActivity {
     private void initParticipantsChipGroup(){
         initAutoCompleteAdapter();
         binding.participantsInputLayout.setEndIconOnClickListener(view -> {
-            String email = binding.participantsAutoCompleteTextView.getText().toString().trim();
-            if (checkEmailValidity(email)) {
-                binding.participantsInputLayout.setError(null);
-                Chip chip = (Chip) LayoutInflater.from(this).inflate(R.layout.chip, null, false);
-                chip.setText(email);
-                chip.setOnCloseIconClickListener(view1 -> {
-                    binding.participantsChipGroup.removeView(view1);
-                });
-                binding.participantsChipGroup.addView(chip);
-                binding.participantsAutoCompleteTextView.setText("");
-            }
+            autoCompleteDropDrownItemClicked();
         });
     }
 
@@ -325,6 +316,24 @@ public class AddMeetingActivity extends AppCompatActivity {
         List<String> data = DI.getApiService().getAllParticipantsList();
         ArrayAdapter<String> adapter = new ArrayAdapter(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, data);
         binding.participantsAutoCompleteTextView.setAdapter(adapter);
+
+        binding.participantsAutoCompleteTextView.setOnItemClickListener((adapterView, view, i, l) -> {
+            autoCompleteDropDrownItemClicked();
+        });
+    }
+
+    private void autoCompleteDropDrownItemClicked(){
+        String email = binding.participantsAutoCompleteTextView.getText().toString().trim();
+        if (checkEmailValidity(email)) {
+            binding.participantsInputLayout.setError(null);
+            Chip chip = (Chip) LayoutInflater.from(this).inflate(R.layout.chip, null, false);
+            chip.setText(email);
+            chip.setOnCloseIconClickListener(view1 -> {
+                binding.participantsChipGroup.removeView(view1);
+            });
+            binding.participantsChipGroup.addView(chip);
+            binding.participantsAutoCompleteTextView.setText("");
+        }
     }
 
     /**

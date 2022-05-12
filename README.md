@@ -5,7 +5,7 @@ OpenClassrooms - Android App developer - P4 Repository: Mini-app for meetings ma
 
 # Github Repository:
 
-git@github.com:SimoJOUDAR/P3_MaReu.git
+git@github.com:SimoJOUDAR/P4_MaReu.git
 
 
 # App specifications:

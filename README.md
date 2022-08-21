@@ -1,44 +1,28 @@
-# MaReu
+# MeReu
 
-OpenClassrooms - Android App developer - P4 Repository: Mini-app for meetings management.
+## About
+This is my fourth project for Openclassrooms' **Android App Development program**.
+This **Native Android App "MaReu"** is meant for managing meetings for better productivity and coordination.
 
+## Testing
+This source code package incorporates **unit tests** and **instrumentation tests** as well as **HTML results** of these tests.
 
-# Github Repository:
+## Installation
+Clone/Download this repository and open it with **Android Studio**
+```bash
+git clone https://github.com/SimoJOUDAR/P4_MaReu.git
+```
 
-git@github.com:SimoJOUDAR/P4_MaReu.git
+## Run the App
+Once the project opened, you can run the App using Android studio's AVD to execute it.
 
+## Generating signed APK
+From Android Studio:
+1. Go to ***Build*** menu
+2. Go to ***Build Bundle(s) / APK(s)***
+3. Click on ***Build APK(s)***
+   The APK generated can be loaded and run on any Android phone.
 
-# App specifications:
-
-- POC (with no persistence)
-- Minimum API : Android 5.0 (API21).
-- Display a list of available meetings, featuring :
-    - Meeting's icon,
-    - Meeting's topic,
-    - Time of the meeting,
-    - Meeting room,
-    - Email list of meeting's participants,
-    - Meeting's delete button.
-- Add a new meeting.
-- Filters:
-    - Filter meetings by date,
-    - Filter meetings by room.
-- Data sample for POC demonstration
-
-
-# Instructions
-
-To import the project using Android Studio, go to :
-    - File > New > Project from Version Control...
-    - At "Version Control", choose "Git".
-    - At "URL", paste github repository mentioned above.
-    - At "Directory", choose your convenient directory if needed, otherwise keep the default directory.
-    - Press "Clone" button, and the project will be imported and will open.
-
-To run the app in the emulator of your choice, Press "Run app" button.
-
-
-# Reports
-
-Final unit tests and instrumentation tests reports (HTML format) are available in the project's root repository.
+## Preview
+<img src = "media/P4_MaReu_1.png" height="550"> <img src = "media/P4_MaReu_2.png" height="550"> <img src = "media/P4_MaReu_3.png" height="550">
 

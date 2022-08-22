@@ -1,11 +1,9 @@
 package fr.joudar.mareu.ui;
 
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -40,7 +38,6 @@ public class MeetingsListRecyclerViewAdapter extends RecyclerView.Adapter<Meetin
         return new MyViewHolder(viewHolderBinding);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.makeBindings(mMeetingList.get(position));
@@ -51,13 +48,15 @@ public class MeetingsListRecyclerViewAdapter extends RecyclerView.Adapter<Meetin
         return this.mMeetingList.size();
     }
 
+    /***********************************************************************************************
+     ** ViewHolder
+     **********************************************************************************************/
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         public MyViewHolder(MeetingItemBinding viewHolderBinding) {
             super(viewHolderBinding.getRoot());
         }
-
-        @RequiresApi(api = Build.VERSION_CODES.O)
 
         /**
          * Makes all ViewHolder views bindings.

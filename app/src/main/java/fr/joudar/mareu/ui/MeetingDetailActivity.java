@@ -1,12 +1,10 @@
 package fr.joudar.mareu.ui;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import fr.joudar.mareu.R;
 import fr.joudar.mareu.databinding.ActivityMeetingDetailBinding;
@@ -20,7 +18,6 @@ public class MeetingDetailActivity extends AppCompatActivity {
     ActivityMeetingDetailBinding binding;
     Meeting mMeeting;
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +39,6 @@ public class MeetingDetailActivity extends AppCompatActivity {
     /**
      * Update UI with the correct data.
      */
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private void updateUI(){
         binding.meetingRoomImage.setImageResource(mMeeting.getRoom().getRoomIcon());
         binding.meetingRoomName1.setText(mMeeting.getRoom().getRoomName());

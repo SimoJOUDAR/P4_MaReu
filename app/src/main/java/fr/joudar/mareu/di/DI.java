@@ -1,16 +1,11 @@
 package fr.joudar.mareu.di;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import fr.joudar.mareu.service.ApiService;
 import fr.joudar.mareu.service.DummyApiService;
 
 /**
  * Dependency injector to get instance of services
  */
-@RequiresApi(api = Build.VERSION_CODES.O)
 public class DI {
 
     private static ApiService apiService = new DummyApiService();

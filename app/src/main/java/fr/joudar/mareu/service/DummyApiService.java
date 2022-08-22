@@ -1,9 +1,5 @@
 package fr.joudar.mareu.service;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -15,7 +11,6 @@ import fr.joudar.mareu.model.Room;
 /**
  * Dummy mock of the Api
  */
-@RequiresApi(api = Build.VERSION_CODES.O)
 public class DummyApiService implements ApiService{
 
     private List<Room> roomsList = DummySampleGenerator.generateRoomsList();

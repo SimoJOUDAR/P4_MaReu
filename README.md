@@ -26,3 +26,4 @@ From Android Studio:
 ## Preview
 <img src = "media/P4_MaReu_1.png" height="550"> <img src = "media/P4_MaReu_2.png" height="550"> <img src = "media/P4_MaReu_3.png" height="550">
 
+https://user-images.githubusercontent.com/80898080/185961235-1c83d237-5cad-4b01-8f0b-15f3c47af2d3.mp4

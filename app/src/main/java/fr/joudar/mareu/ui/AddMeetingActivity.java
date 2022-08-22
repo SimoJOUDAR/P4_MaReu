@@ -1,13 +1,8 @@
 package fr.joudar.mareu.ui;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,11 +11,13 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.textfield.TextInputEditText;
@@ -50,7 +47,6 @@ public class AddMeetingActivity extends AppCompatActivity {
 
     ActivityAddMeetingBinding binding;
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,7 +83,6 @@ public class AddMeetingActivity extends AppCompatActivity {
      * @param item
      * @return true if a new Meeting is successfully created and finishes the Activity.
      */
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.create_new_meeting){
@@ -108,7 +103,6 @@ public class AddMeetingActivity extends AppCompatActivity {
      * To auto-generate an Id for the new Meeting being created.
      * @return true after assigning the Id value to the mId field.
      */
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private boolean createNewMeetingId(){
         int lastIterator = DI.getApiService().getMeetings().size()-1;
         mId = DI.getApiService().getMeetings().get(lastIterator).getId()+1;
@@ -145,7 +139,6 @@ public class AddMeetingActivity extends AppCompatActivity {
     /**
      * Initializes the spinner for the Room list and configures the Listener to pick up the chosen Room and assigns it to the mRoom field.
      */
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private void initRoomsListSpinner(){
         List<Room> roomsList = DI.getApiService().getRoomsList();
         RoomsListSpinnerAdapter roomsAdapter = new RoomsListSpinnerAdapter(getApplicationContext(), R.layout.rooms_list_spinner_item, roomsList);
@@ -161,7 +154,6 @@ public class AddMeetingActivity extends AppCompatActivity {
      * Checks if the mRoom field has been assigned correctly.
      * @return true if the mRoom field contains a valid value. Otherwise, false and shows an error.
      */
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private boolean validateRoom(){
         // TODO: onTextChange => Remove error
         if (DI.getApiService().getRoomsList().contains(mRoom)){
@@ -187,7 +179,6 @@ public class AddMeetingActivity extends AppCompatActivity {
         int year = calendar.get(Calendar.YEAR);
 
         DatePickerDialog picker = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                 mDate = LocalDate.of(i, i1+1, i2);
@@ -229,7 +220,6 @@ public class AddMeetingActivity extends AppCompatActivity {
         int minute = calendar.get(Calendar.MINUTE);
 
         TimePickerDialog startTimepicker = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onTimeSet(TimePicker timePicker, int i, int i1) {
                 mStartTime = LocalTime.of(i, i1);
@@ -247,7 +237,6 @@ public class AddMeetingActivity extends AppCompatActivity {
         });
 
         TimePickerDialog finishTimepicker = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onTimeSet(TimePicker timePicker, int i, int i1) {
                 mFinishTime = LocalTime.of(i, i1);
@@ -300,7 +289,6 @@ public class AddMeetingActivity extends AppCompatActivity {
     /**
      * Configures the participants "add button" Listener to pick up only valid inputs and assign them to new chips.
      */
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private void initParticipantsChipGroup(){
         initAutoCompleteAdapter();
         binding.participantsInputLayout.setEndIconOnClickListener(view -> {
@@ -311,7 +299,6 @@ public class AddMeetingActivity extends AppCompatActivity {
     /**
      * Initializes the Participants AutoComplete with the correct data.
      */
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private void initAutoCompleteAdapter(){
         List<String> data = DI.getApiService().getAllParticipantsList();
         ArrayAdapter<String> adapter = new ArrayAdapter(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, data);
@@ -376,7 +363,6 @@ public class AddMeetingActivity extends AppCompatActivity {
      * Adds the new email input to the Participants List if it doesn't already contains it. To keep email suggestions updated.
      * @param email
      */
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private void validateAndSaveNewParticipants(String email) {
         if (!DI.getApiService().getAllParticipantsList().contains(email)){
             DI.getApiService().addNewParticipant(email);
@@ -386,7 +372,6 @@ public class AddMeetingActivity extends AppCompatActivity {
     /**
      * Assigns chip emails to the mParticipants field.
      */
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private void initParticipants(){
         int chipCount = binding.participantsChipGroup.getChildCount();
         if (chipCount>0) {
@@ -435,7 +420,6 @@ public class AddMeetingActivity extends AppCompatActivity {
     /**
      * Checks if all fields are assigned correctly to create a new Meeting and add it to the Meeting list.
      */
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private void createNewMeeting(){
         if (confirmationInput()) {
             mMeeting = new Meeting(mId, mTopic, mDate, mStartTime, mFinishTime, mRoom, mParticipants);
@@ -448,7 +432,6 @@ public class AddMeetingActivity extends AppCompatActivity {
      * Checks if all inputs and assignments are valid.
      * @return true if all inputs and assignments are valid. Otherwise, false.
      */
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private boolean confirmationInput(){
         initParticipants();
         boolean validInput = createNewMeetingId();

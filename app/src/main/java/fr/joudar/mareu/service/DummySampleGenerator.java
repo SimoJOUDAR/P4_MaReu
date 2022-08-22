@@ -1,15 +1,9 @@
 package fr.joudar.mareu.service;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import fr.joudar.mareu.R;
@@ -19,7 +13,7 @@ import fr.joudar.mareu.model.Room;
 /**
  * Data sample generator for demonstrations
  */
-@RequiresApi(api = Build.VERSION_CODES.O)
+
 public abstract class DummySampleGenerator {
 
     public static List<Room> DUMMY_ROOMS_LIST = Arrays.asList(

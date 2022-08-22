@@ -1,19 +1,14 @@
 package fr.joudar.mareu.model;
 
-import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 
-import java.io.Serializable;
-import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -71,7 +66,7 @@ public class Meeting implements Parcelable {
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+
     protected Meeting(Parcel in) {
         id = in.readInt();
         topic = in.readString();
@@ -83,7 +78,6 @@ public class Meeting implements Parcelable {
     }
 
     public static final Creator<Meeting> CREATOR = new Creator<Meeting>() {
-        @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public Meeting createFromParcel(Parcel in) {
             return new Meeting(in);
@@ -125,9 +119,9 @@ public class Meeting implements Parcelable {
      * Get value of date formatted and converted into String
      * @return date as String
      */
-    @RequiresApi(api = Build.VERSION_CODES.O)
+
     public String getDateAsString(){
-        return date.format(DateTimeFormatter.ofPattern("dd'/'MMM", Locale.FRENCH));
+        return date.format(DateTimeFormatter.ofPattern("dd' 'MMM", Locale.FRENCH));
     }
 
     /**
@@ -143,7 +137,7 @@ public class Meeting implements Parcelable {
      * Get value of startTime formatted and converted into String
      * @return startTime as String
      */
-    @RequiresApi(api = Build.VERSION_CODES.O)
+
     @NonNull
     public String getStartTimeAsString(){
         // return DateFormat.getTimeInstance( DateFormat.SHORT ).format(startTime);
@@ -163,7 +157,7 @@ public class Meeting implements Parcelable {
      * Get value of finishTime formatted and converted into String
      * @return finishTime as String
      */
-    @RequiresApi(api = Build.VERSION_CODES.O)
+
     @NonNull
     public String getFinishTimeAsString(){
         // return DateFormat.getTimeInstance( DateFormat.SHORT ).format(finishTime);
@@ -218,7 +212,7 @@ public class Meeting implements Parcelable {
         return 0;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(id);

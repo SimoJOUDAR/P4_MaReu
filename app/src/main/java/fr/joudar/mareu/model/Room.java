@@ -1,9 +1,7 @@
 package fr.joudar.mareu.model;
 
-import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 
 import java.io.Serializable;
 import java.util.Objects;

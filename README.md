@@ -11,7 +11,6 @@ This project has been developed in Java mainly for the following reasons:
 3. Java Supports Multiple Platforms: thus, allowing the freedom to switch to Kotlin or stay with Java in the upcoming features and versions
 4. Skills availability: Our company counts more experienced Java developers than Kotlin developers.
    
-   
 ## Testing
 This source code package incorporates **unit tests** and **instrumentation tests** as well as **HTML results** of these tests.
 

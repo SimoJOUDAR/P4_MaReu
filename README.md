@@ -4,6 +4,14 @@
 This is my fourth project for Openclassrooms' **Android App Development program**.
 This **Native Android App "MaReu"** is meant for managing meetings for better productivity and coordination.
 
+## Java choice
+This project has been developed in Java mainly for the following reasons:
+1. Java’s Automatic memory management : Automatically manages allocating and deallocating memory
+2. Java’s Garbage Collector: which enhances memory management and reduces potential memory leaks
+3. Java Supports Multiple Platforms: thus, allowing the freedom to switch to Kotlin or stay with Java in the upcoming features and versions
+4. Skills availability: Our company counts more experienced Java developers than Kotlin developers.
+   
+   
 ## Testing
 This source code package incorporates **unit tests** and **instrumentation tests** as well as **HTML results** of these tests.
 
